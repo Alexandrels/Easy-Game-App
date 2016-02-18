@@ -46,4 +46,14 @@
         android:layout_alignStart="@+id/cad_equipe"
         android:layout_alignRight="@+id/cad_equipe"
         android:layout_alignEnd="@+id/cad_equipe" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dialog"
+        android:id="@+id/dlgConvite"
+        android:layout_below="@+id/mapa_mostra_usuarios"
+        android:layout_alignLeft="@+id/mapa_mostra_usuarios"
+        android:layout_alignStart="@+id/mapa_mostra_usuarios"
+        android:layout_marginTop="49dp" />
 </RelativeLayout>
