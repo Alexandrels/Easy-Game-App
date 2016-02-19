@@ -10,9 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
+import w2.com.br.easy_game_app.enuns.TipoPosicao;
 import w2.com.br.easy_game_app.ui.CadEquipeActivity;
 import w2.com.br.easy_game_app.ui.CadUsuarioActivity;
 import w2.com.br.easy_game_app.ui.MapaUsuariosActivity;
@@ -23,6 +26,7 @@ public class MenuInicialActivity extends AppCompatActivity {
     private Button btnCadUsuario;
     private Button btnCadEquipe;
     private Button btnMostraMapaUsuarios;
+    private Spinner sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,14 +66,17 @@ public class MenuInicialActivity extends AppCompatActivity {
         //dialog
         Button btnAlertDialog = (Button) findViewById(R.id.dlgConvite);
         btnAlertDialog.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View v) {
                 LayoutInflater inflater = getLayoutInflater();
 
-                View dialoglayout = inflater.inflate(R.layout.activity_convite, null);
+                View dialoglayout = inflater.inflate(R.layout.activity_invite, null);
 
                 final EditText etAsunto = (EditText) dialoglayout.findViewById(R.id.et_EmailAsunto);
                 final EditText etMensaje = (EditText) dialoglayout.findViewById(R.id.et_EmailMensaje);
+
 
                 Button btnEnviarMail = (Button) dialoglayout.findViewById(R.id.btnEnviarMail);
                 btnEnviarMail.setOnClickListener(new View.OnClickListener() {
