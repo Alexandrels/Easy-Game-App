@@ -35,8 +35,8 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".MenuInicialActivity"
-            android:label="@string/title_activity_menu_inicial">
+            android:name=".ui.LoginUI"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -50,7 +50,9 @@
         <activity android:name=".ui.MostraUsuariosActivity" />
         <activity android:name=".ui.MapaUsuariosActivity" />
         <activity android:name=".ui.ConviteActivity" />
-        <activity android:name=".ui.InviteActivity"></activity>
+        <activity android:name=".ui.InviteActivity" />
+        <activity android:name=".MenuInicialActivity" />
+        <activity android:name=".ui.AgendaUI" />
     </application>
 
 </manifest>
