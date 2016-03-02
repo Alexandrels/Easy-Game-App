@@ -34,9 +34,7 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity
-            android:name=".ui.LoginUI"
-            >
+        <activity android:name=".ui.LoginUI">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,6 +51,8 @@
         <activity android:name=".ui.InviteActivity" />
         <activity android:name=".MenuInicialActivity" />
         <activity android:name=".ui.AgendaUI" />
+        <activity android:name=".ui.MeusTimesUI" />
+        <activity android:name=".ui.AdmTimeUI"></activity>
     </application>
 
 </manifest>

@@ -23,7 +23,7 @@ public class GenericAsyncTask extends AsyncTask<String, ProgressDialog, JSONObje
     private static final String DESENVOLVIMENTO = "http://192.168.1.13";
     private static final String ONDELINE = "http://52.88.65.93";
 
-    private static final String URL_WS = String.format("%s:8080/easy-game/servicos",DESENVOLVIMENTO);
+    private static final String URL_WS = String.format("%s:8080/easy-game/servicos", DESENVOLVIMENTO);
     private Atualizavel atualizavel;
     private Context context;
     private String servico;
@@ -59,8 +59,15 @@ public class GenericAsyncTask extends AsyncTask<String, ProgressDialog, JSONObje
                     resposta = HttpConectionSingleton.gethttpConectionSingletonInstance().doGet(new URL(String.format("%s/%s", URL_WS, servico)));
                     if (resposta != null) {
                         try {
-                            JSONObject jsonObject = new JSONObject();
-                            jsonObject.put("array", new JSONArray(resposta));
+                            JSONObject jsonObject = new JSONObject(resposta);
+                            if (jsonObject.has("objeto")) {
+                                JSONObject retorno = new JSONObject(jsonObject.getString("objeto"));
+                                if (retorno.has("array")) {
+                                    jsonObject.put("array", new JSONArray(resposta));
+                                } else {
+                                    jsonObject.put("objeto", new JSONArray(resposta));
+                                }
+                            }
                             return jsonObject;
 
                         } catch (JSONException je) {
@@ -73,7 +80,7 @@ public class GenericAsyncTask extends AsyncTask<String, ProgressDialog, JSONObje
                     if (resposta != null) {
                         try {
                             JSONObject jsonObject = new JSONObject(resposta);
-                           return jsonObject;
+                            return jsonObject;
 
                         } catch (JSONException je) {
                             return new JSONObject();

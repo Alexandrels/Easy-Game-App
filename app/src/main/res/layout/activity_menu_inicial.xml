@@ -9,51 +9,62 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="w2.com.br.easy_game_app.MenuInicialActivity">
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cad Usuario"
-        android:id="@+id/cad_usuario"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="76dp"
-        android:layout_marginStart="76dp"
-        android:layout_marginTop="89dp" />
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cad Equipe"
-        android:id="@+id/cad_equipe"
-        android:layout_marginTop="36dp"
-        android:layout_below="@+id/cad_usuario"
-        android:layout_alignLeft="@+id/cad_usuario"
-        android:layout_alignStart="@+id/cad_usuario"
-        android:layout_alignRight="@+id/cad_usuario"
-        android:layout_alignEnd="@+id/cad_usuario" />
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Mapa"
-        android:id="@+id/mapa_mostra_usuarios"
-        android:layout_marginTop="36dp"
-        android:layout_below="@+id/cad_equipe"
-        android:layout_alignLeft="@+id/cad_equipe"
-        android:layout_alignStart="@+id/cad_equipe"
-        android:layout_alignRight="@+id/cad_equipe"
-        android:layout_alignEnd="@+id/cad_equipe" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Dialog"
-        android:id="@+id/agenda"
-        android:layout_below="@+id/mapa_mostra_usuarios"
-        android:layout_alignLeft="@+id/mapa_mostra_usuarios"
-        android:layout_alignStart="@+id/mapa_mostra_usuarios"
-        android:layout_marginTop="49dp" />
+            <Button
+                android:id="@+id/cad_usuario"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cad Usuario" />
+
+            <Button
+                android:id="@+id/cad_equipe"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cad Equipe" />
+
+            <Button
+                android:id="@+id/mapa_mostra_usuarios"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mapa" />
+
+            <Button
+                android:id="@+id/agenda"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dialog" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Meus Times"
+                android:id="@+id/meusTimes"
+                />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Jogo Livre"
+                android:id="@+id/jogoLivre"
+                />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mapa Quadras/Times"
+                android:id="@+id/quadraEtimes"
+                />
+        </LinearLayout>
+    </ScrollView>
+
+
+
 </RelativeLayout>
