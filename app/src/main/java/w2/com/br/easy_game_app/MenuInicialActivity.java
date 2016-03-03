@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import w2.com.br.easy_game_app.enuns.TipoPosicao;
+import w2.com.br.easy_game_app.ui.AgendaUI;
 import w2.com.br.easy_game_app.ui.CadEquipeActivity;
 import w2.com.br.easy_game_app.ui.CadUsuarioActivity;
 import w2.com.br.easy_game_app.ui.MapaUsuariosActivity;
@@ -27,6 +28,7 @@ public class MenuInicialActivity extends AppCompatActivity {
     private Button btnCadEquipe;
     private Button btnMostraMapaUsuarios;
     private Spinner sp;
+    private Button btnAgenda;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,46 +65,16 @@ public class MenuInicialActivity extends AppCompatActivity {
             }
         });
 
-        //dialog
-        Button btnAlertDialog = (Button) findViewById(R.id.dlgConvite);
-        btnAlertDialog.setOnClickListener(new View.OnClickListener() {
 
-
+         btnAgenda = (Button) findViewById(R.id.agenda);
+        btnAgenda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LayoutInflater inflater = getLayoutInflater();
-
-                View dialoglayout = inflater.inflate(R.layout.activity_invite, null);
-
-                final EditText etAsunto = (EditText) dialoglayout.findViewById(R.id.et_EmailAsunto);
-                final EditText etMensaje = (EditText) dialoglayout.findViewById(R.id.et_EmailMensaje);
-
-
-                Button btnEnviarMail = (Button) dialoglayout.findViewById(R.id.btnEnviarMail);
-                btnEnviarMail.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        String subject = etAsunto.getText().toString();
-                        String message = etMensaje.getText().toString();
-
-                        Intent email = new Intent(Intent.ACTION_SEND);
-                        email.putExtra(Intent.EXTRA_EMAIL, new String[] { "micorre@gmail.com"});
-                        email.putExtra(Intent.EXTRA_SUBJECT, subject);
-                        email.putExtra(Intent.EXTRA_TEXT, " mensaje " + message);
-
-                        // need this to prompts email client only
-                        email.setType("message/rfc822");
-                        startActivity(Intent.createChooser(email, "Seleciona un cliente de correo"));
-
-                    }
-                });
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(MenuInicialActivity.this);
-                builder.setView(dialoglayout);
-                builder.show();
+                Intent it = new Intent(v.getContext(), AgendaUI.class);
+                startActivity(it);
             }
         });
+
 
     }
 

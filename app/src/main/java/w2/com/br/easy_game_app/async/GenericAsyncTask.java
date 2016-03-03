@@ -20,7 +20,7 @@ import w2.com.br.easy_game_app.enuns.Method;
  */
 public class GenericAsyncTask extends AsyncTask<String, ProgressDialog, JSONObject> {
 
-    private static final String DESENVOLVIMENTO = "http://192.168.1.8";
+    private static final String DESENVOLVIMENTO = "http://192.168.1.13";
     private static final String ONDELINE = "http://52.88.65.93";
 
     private static final String URL_WS = String.format("%s:8080/easy-game/servicos",DESENVOLVIMENTO);
@@ -72,8 +72,7 @@ public class GenericAsyncTask extends AsyncTask<String, ProgressDialog, JSONObje
                     resposta = HttpConectionSingleton.gethttpConectionSingletonInstance().doPost(new URL(String.format("%s/%s", URL_WS, servico)), parametros[0]);
                     if (resposta != null) {
                         try {
-                            JSONObject jsonObject = new JSONObject();
-                            jsonObject.put("objeto", new JSONObject(resposta));
+                            JSONObject jsonObject = new JSONObject(resposta);
                            return jsonObject;
 
                         } catch (JSONException je) {
