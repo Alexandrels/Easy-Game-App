@@ -1,5 +1,6 @@
 package w2.com.br.easy_game_app.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListAdapter;
@@ -34,6 +35,9 @@ public class AgendaUI extends AppCompatActivity implements Atualizavel{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.agenda_ui);
 
+        Intent intent = getIntent();
+        Long idEquipe = intent.getLongExtra("id",-1l);
+
         tabHost = (TabHost) findViewById(R.id.agenda_ui_tabhost );
         tabHost.setup();
 
@@ -55,7 +59,7 @@ public class AgendaUI extends AppCompatActivity implements Atualizavel{
 
         lvEventos = (ListView) findViewById(R.id.agenda_ui_lv_jogos);
 
-        new GenericAsyncTask(AgendaUI.this, AgendaUI.this, Method.GET, String.format("%s", servico)).execute();
+        new GenericAsyncTask(AgendaUI.this, AgendaUI.this, Method.GET, String.format("%s/%f", servico,idEquipe)).execute();
     }
 
     @Override

@@ -65,7 +65,7 @@ public class GenericAsyncTask extends AsyncTask<String, ProgressDialog, JSONObje
                                 if (retorno.has("array")) {
                                     jsonObject.put("array", new JSONArray(resposta));
                                 } else {
-                                    jsonObject.put("objeto", new JSONArray(resposta));
+                                    jsonObject.put("objeto", new JSONObject(resposta));
                                 }
                             }
                             return jsonObject;

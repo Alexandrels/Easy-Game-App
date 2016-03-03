@@ -1,6 +1,7 @@
 package w2.com.br.easy_game_app.ui;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,6 +18,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import w2.com.br.easy_game_app.ListAdapter.AdapterListViewMeusTimes;
 import w2.com.br.easy_game_app.R;
 import w2.com.br.easy_game_app.async.GenericAsyncTask;
 import w2.com.br.easy_game_app.entity.Atualizavel;
@@ -26,6 +29,7 @@ public class MeusTimesUI extends AppCompatActivity implements Atualizavel {
     private ListView listaEquipes;
     private String servico = "equipe";
     private List<Equipe> equipes;
+    private AdapterListViewMeusTimes adapterListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +37,13 @@ public class MeusTimesUI extends AppCompatActivity implements Atualizavel {
         setContentView(R.layout.activity_meus_times_ui);
 
         listaEquipes = (ListView) findViewById(R.id.listaEquipes);
-        listaEquipes.setOnClickListener(new View.OnClickListener() {
+        listaEquipes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent it = new Intent(v.getContext(), AdmTimeUI.class);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Equipe equipe = (Equipe) parent.getAdapter().getItem(position);
+                Long equipeId = equipe.getId();
+                Intent it = new Intent(view.getContext(), AdmTimeUI.class);
+                it.putExtra("id", equipeId);
                 startActivity(it);
             }
         });
@@ -47,20 +54,26 @@ public class MeusTimesUI extends AppCompatActivity implements Atualizavel {
     @Override
     public void atualizar(JSONObject jsonObject) throws JSONException {
         equipes = new ArrayList<>();
+        JSONObject retorno = null;
         if (jsonObject.has("objeto")) {
+            retorno = new JSONObject(jsonObject.getString("objeto")) ;
             try {
-                JSONArray array = jsonObject.getJSONArray("array");
-                for (int i = 0; i < array.length(); i++) {
-                    //adiono as equipes que vieram da web
-//                    equipes.add(gson.fromJson(array.getJSONObject(i).toString(), Jogador.class));
+                if(retorno.has("array")){
+                    JSONArray array = retorno.getJSONArray("array");
+                    for (int i = 0; i < array.length(); i++) {
+                        equipes.add(Equipe.toEquipe(array.getJSONObject(i)));
+                    }
+                     adapterListView = new AdapterListViewMeusTimes(MeusTimesUI.this,equipes);
+                    listaEquipes.setAdapter(adapterListView);
+                    //Cor quando a lista é selecionada para ralagem.
+                    listaEquipes.setCacheColorHint(Color.TRANSPARENT);
                 }
-                ListAdapter adapter = new ArrayAdapter<Equipe>(this,android.R.layout.simple_list_item_1,equipes);
-                listaEquipes.setAdapter(adapter);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         } else if(jsonObject.has("erro")) {
             //TODO Toast;
+            Toast.makeText(this,retorno.get("erro").toString(),Toast.LENGTH_SHORT).show();
         }
     }
 }
