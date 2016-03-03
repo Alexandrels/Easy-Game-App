@@ -115,6 +115,7 @@ public class UsuarioEquipe implements Serializable {
 			usuarioEquipe.setId(Long.valueOf(jsonObject.getInt("id")));
 		}
 		usuarioEquipe.setUsuario(new Usuario(Long.valueOf(jsonObject.getInt("usuario"))));
+        usuarioEquipe.getUsuario().setNome(jsonObject.getString("usuarioNome"));
 		if (jsonObject.has("equipe")) {
 			usuarioEquipe.setEquipe(new Equipe(Long.valueOf(jsonObject.getInt("equipe"))));
 		}
@@ -125,6 +126,10 @@ public class UsuarioEquipe implements Serializable {
 		return usuarioEquipe;
 
 	}
+
+    public String getRetornaPosicao(){
+        return getPosicao().getDescricao();
+    }
 
     @Override
     public boolean equals(Object obj) {
