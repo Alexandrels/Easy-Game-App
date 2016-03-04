@@ -261,6 +261,25 @@ public class Usuario implements Serializable {
         return usuario;
 
     }
+    public static Usuario toCoordenadasUsuario(JSONObject jsonObject) throws JSONException {
+        Usuario usuario = new Usuario();
+        try {
+            if (jsonObject.has("id")) {
+                usuario.setId(jsonObject.getLong("id"));
+            }
+            usuario.setNome(jsonObject.getString("nome"));
+            usuario.setApelido(jsonObject.getString("apelido"));
+            usuario.setLatitude(Double.valueOf(jsonObject.get("latitude").toString()));
+            usuario.setLongitude(Double.valueOf(jsonObject.get("longitude").toString()));
+            usuario.setTipoPosicao(TipoPosicao.values()[jsonObject.getInt("posicao")]);
+            usuario.setTelefone(jsonObject.getString("telefone"));
+        } catch (JSONException e) {
+            throw new RuntimeException("Erro ao ler JSON de Usuario", e);
+        }
+        return usuario;
+
+    }
+
 
 
 }

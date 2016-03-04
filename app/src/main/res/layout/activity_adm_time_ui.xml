@@ -32,6 +32,7 @@
                     android:layout_alignParentTop="true"
                     android:orientation="vertical">
 
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -53,6 +54,12 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:inputType="date" />
+                    <Button
+                        android:id="@+id/mapa_mostra_usuarios"
+                        style="?android:attr/buttonStyleSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Convidar Jogadores" />
                     <ListView
                         android:id="@+id/listaJogadores"
                         android:layout_width="fill_parent"
@@ -65,15 +72,6 @@
 
             <LinearLayout
                 android:id="@+id/adm_time_ui_agenda"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/adm_time_ui_convidar"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
