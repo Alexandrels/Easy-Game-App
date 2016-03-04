@@ -2,6 +2,7 @@ package w2.com.br.easy_game_app.ui;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -22,16 +23,30 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import w2.com.br.easy_game_app.ListAdapter.ListAdapterJogador;
 import w2.com.br.easy_game_app.R;
+import w2.com.br.easy_game_app.async.GenericAsyncTask;
+import w2.com.br.easy_game_app.entity.Atualizavel;
+import w2.com.br.easy_game_app.entity.Equipe;
 import w2.com.br.easy_game_app.entity.Usuario;
+import w2.com.br.easy_game_app.enuns.Method;
 import w2.com.br.easy_game_app.enuns.TipoPosicao;
 
-public class MapaUsuariosActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapaUsuariosActivity extends FragmentActivity implements OnMapReadyCallback, Atualizavel {
 
     private GoogleMap mMap;
     private Marker marker;
     private Spinner sp;
     ArrayAdapter<TipoPosicao> adapter;
+    private final String servicoMapa = "usuario/coordenadas/1";
+    private List<Usuario> jogadores;
 
 
     @Override
@@ -45,15 +60,26 @@ public class MapaUsuariosActivity extends FragmentActivity implements OnMapReady
         //spinner posição
         adapter = new ArrayAdapter<TipoPosicao>(this, android.support.design.R.layout.support_simple_spinner_dropdown_item, TipoPosicao.values());
         adapter.setDropDownViewResource(android.support.design.R.layout.support_simple_spinner_dropdown_item);
+
+        //chamar coordenadas de jogadores
+        new GenericAsyncTask(MapaUsuariosActivity.this, this, Method.GET, String.format("%s", servicoMapa)).execute();
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+//        LatLng sydney = new LatLng(-25.358840, -49.214756);
+//        mMap.addMarker(new MarkerOptions().position(sydney).title("(41)99221257"));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 17));
+
         LatLng sydney = new LatLng(-25.358840, -49.214756);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("(41)99221257"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 17));
+
+//        mMap.addMarker(new MarkerOptions().position(sydney).title("(41)99221257"));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 17));
+
+//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 12));
+//        mMap.setMapType(0);
 
 //        customMarker(new LatLng(-25.358840, -49.214756), "Marcador 1", "title marcador 1");
 //        customMarker(new LatLng(-25.358832, -49.214740), "Marcador 2", "title marcador 2");
@@ -131,12 +157,53 @@ public class MapaUsuariosActivity extends FragmentActivity implements OnMapReady
             }
         });
     }
-    public void customMarker(LatLng latLng, String title, String snippet){
+
+    public void customMarker(LatLng latLng, String title, String snippet) {
         MarkerOptions options = new MarkerOptions();
         options.position(latLng).title(title).snippet(snippet);
 
         //criar o marker
         marker = mMap.addMarker(options);
 
+    }
+    public void customMarkers(List<Usuario>jds) {
+        LatLng sydney = new LatLng(-25.358840, -49.214756);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 12));
+        mMap.setMapType(0);
+        for (Usuario usuario : jds) {
+            LatLng latLng = new LatLng(usuario.getLatitude(), usuario.getLongitude());
+            String dados = String.format("%s %s %s", usuario.getApelido(), usuario.getTelefone(), usuario.getTipoPosicao().getDescricao());
+            MarkerOptions options = new MarkerOptions();
+            options.position(latLng).title(dados).snippet(dados);
+
+            //criar o marker
+            mMap.addMarker(options);
+        }
+
+
+    }
+
+    @Override
+    public void atualizar(JSONObject jsonObject) throws JSONException {
+        jogadores = new ArrayList<>();
+        JSONObject retorno = null;
+        if (jsonObject.has("objeto")) {
+            retorno = new JSONObject(jsonObject.getString("objeto"));
+            try {
+                if (retorno.has("objeto")) {
+                    JSONObject objeto = retorno.getJSONObject("objeto");
+                    JSONArray array = objeto.getJSONArray("coordenadas");
+                    for (int i = 0; i < array.length(); i++) {
+                        jogadores.add(Usuario.toCoordenadasUsuario(array.getJSONObject(i)));
+                    }
+                    customMarkers(jogadores);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else if (jsonObject.has("erro")) {
+            //TODO Toast;
+            Toast.makeText(this, retorno.get("erro").toString(), Toast.LENGTH_SHORT).show();
+        }
     }
 }
