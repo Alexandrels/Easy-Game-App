@@ -59,7 +59,7 @@ public class AgendaUI extends AppCompatActivity implements Atualizavel{
 
         lvEventos = (ListView) findViewById(R.id.agenda_ui_lv_jogos);
 
-        new GenericAsyncTask(AgendaUI.this, AgendaUI.this, Method.GET, String.format("%s/%f", servico,idEquipe)).execute();
+      //  new GenericAsyncTask(AgendaUI.this, AgendaUI.this, Method.GET, String.format("%s", servico,idEquipe)).execute();
     }
 
     @Override
