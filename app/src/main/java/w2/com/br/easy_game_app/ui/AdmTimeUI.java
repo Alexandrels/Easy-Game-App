@@ -96,7 +96,7 @@ public class AdmTimeUI extends AppCompatActivity implements Atualizavel, OnMapRe
         btnMostraMapaUsuarios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(v.getContext(), MapaUsuariosActivity.class);
+                Intent it = new Intent(v.getContext(), MapaConviteUI.class);
                 startActivity(it);
             }
         });
