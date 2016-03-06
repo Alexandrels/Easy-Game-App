@@ -52,7 +52,8 @@
         <activity android:name=".MenuInicialActivity" />
         <activity android:name=".ui.AgendaUI" />
         <activity android:name=".ui.MeusTimesUI" />
-        <activity android:name=".ui.AdmTimeUI"></activity>
+        <activity android:name=".ui.AdmTimeUI" />
+        <activity android:name=".ui.MapaConviteUI"></activity>
     </application>
 
 </manifest>
