@@ -1,6 +1,7 @@
 package w2.com.br.easy_game_app.ui;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -96,19 +98,27 @@ public class MapaConviteUI extends FragmentActivity implements OnMapReadyCallbac
 
                 sp = (Spinner) dialoglayout.findViewById(R.id.sp_posicao_invite);
                 sp.setAdapter(adapter);
-                Button btnSendMail = (Button) dialoglayout.findViewById(R.id.btnConvite);
-                btnSendMail.setOnClickListener(new View.OnClickListener() {
+
+                TextView ttNome = (TextView) dialoglayout.findViewById(R.id.lbNomeUsuario);
+                TextView ttApelido = (TextView) dialoglayout.findViewById(R.id.lbApelido);
+                String apelido = marker.getTitle();
+                String[] split = apelido.split("-");
+                String nome = split[0];
+                String ape = split[1];
+                ttNome.setText(nome.toString());
+                ttApelido.setText(ape.toString());
+
+                builder = new AlertDialog.Builder(MapaConviteUI.this);
+                builder.setView(dialoglayout);
+
+                builder.setPositiveButton("Convidar", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
-                        EditText ttNome = (EditText) dialoglayout.findViewById(R.id.nome_usuario);
+                    public void onClick(DialogInterface dialog, int which) {
+                        TextView ttNome = (TextView) dialoglayout.findViewById(R.id.nome_usuario);
                         EditText ttApelido = (EditText) dialoglayout.findViewById(R.id.apelido_usuario);
                         TipoPosicao tipoPosicao = (TipoPosicao) sp.getSelectedItem();
                         Usuario usuario = new Usuario();
                         usuario.setTipoPosicao(tipoPosicao);
-                        if (ttNome != null) {
-                            String nome = ttNome.getText().toString();
-                            usuario.setNome(nome);
-                        }
                         if (ttApelido != null) {
                             String apelido = ttApelido.getText().toString();
                             usuario.setApelido(apelido);
@@ -116,16 +126,8 @@ public class MapaConviteUI extends FragmentActivity implements OnMapReadyCallbac
                         if (usuario.getTipoPosicao() != null) {
                             Toast.makeText(getApplicationContext(), "Você é fodão! ", Toast.LENGTH_SHORT).show();
                         }
-                        AlertDialog dialog = builder.create();
-                        dialog.hide();
-
-
                     }
                 });
-
-
-                builder = new AlertDialog.Builder(MapaConviteUI.this);
-                builder.setView(dialoglayout);
                 builder.show();
             }
         });
@@ -153,7 +155,8 @@ public class MapaConviteUI extends FragmentActivity implements OnMapReadyCallbac
                             }
                             markerOptions.anchor(0.0f, 1.0f) // Anchors the marker on the bottom left
                                     .position(new LatLng(jogadores.get(i).getLatitude(), jogadores.get(i).getLongitude()))
-                                    .title(jogadores.get(i).getApelido());
+                                    .title(String.format("%s-%d", jogadores.get(i).getApelido(), jogadores.get(i).getId()))
+                                    .snippet(jogadores.get(i).getTipoPosicao().getDescricao());
                             mMap.addMarker(markerOptions);
                             adicionaModalIconeParaConvite();
                         }

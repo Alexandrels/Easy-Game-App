@@ -1,6 +1,7 @@
 package w2.com.br.easy_game_app.ui;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -126,10 +127,13 @@ public class MapaUsuariosActivity extends FragmentActivity implements OnMapReady
 
                 sp = (Spinner) dialoglayout.findViewById(R.id.sp_posicao_invite);
                 sp.setAdapter(adapter);
-                Button btnSendMail = (Button) dialoglayout.findViewById(R.id.btnConvite);
-                btnSendMail.setOnClickListener(new View.OnClickListener() {
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(MapaUsuariosActivity.this);
+                builder.setView(dialoglayout);
+                builder.setPositiveButton("Convidar", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(DialogInterface dialog, int which) {
                         EditText ttNome = (EditText) dialoglayout.findViewById(R.id.nome_usuario);
                         EditText ttApelido = (EditText) dialoglayout.findViewById(R.id.apelido_usuario);
                         TipoPosicao tipoPosicao = (TipoPosicao) sp.getSelectedItem();
@@ -146,13 +150,8 @@ public class MapaUsuariosActivity extends FragmentActivity implements OnMapReady
                         if (usuario.getTipoPosicao() != null) {
                             Toast.makeText(getApplicationContext(), "Você é fodão! ", Toast.LENGTH_SHORT).show();
                         }
-
                     }
                 });
-
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(MapaUsuariosActivity.this);
-                builder.setView(dialoglayout);
                 builder.show();
             }
         });

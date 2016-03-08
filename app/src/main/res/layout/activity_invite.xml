@@ -21,8 +21,8 @@
             android:layout_height="wrap_content"
             android:text="@string/nome" />
 
-        <EditText
-            android:id="@+id/nome_usuario"
+        <TextView
+            android:id="@+id/lbNomeUsuario"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:inputType="text" />
@@ -32,8 +32,8 @@
             android:layout_height="wrap_content"
             android:text="@string/apelido" />
 
-        <EditText
-            android:id="@+id/apelido_usuario"
+        <TextView
+            android:id="@+id/lbApelido"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
 
@@ -47,15 +47,5 @@
             android:layout_height="wrap_content"
             android:spinnerMode="dropdown" />
     </LinearLayout>
-
-
-    <Button
-        android:id="@+id/btnConvite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Convidar"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
 
 </RelativeLayout>
