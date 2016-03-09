@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -48,10 +49,11 @@ public class AdmTimeUI extends AppCompatActivity implements Atualizavel, OnMapRe
     private final String servicoMapa = "coordenadas/1";
     private TabHost tabHost;
     private Equipe equipe;
-    private EditText nomeEquipe, dataFundacao;
+    private TextView nomeEquipe, dataFundacao;
     private ListView listViewJogador;
     private ListAdapterJogador adapterListView;
     private Button btnMostraMapaUsuarios;
+    private String strNomeEquipe;
 
     //efrente ao mapa
     private List<Usuario> jogadores;
@@ -59,6 +61,7 @@ public class AdmTimeUI extends AppCompatActivity implements Atualizavel, OnMapRe
     private Marker marker;
     private Spinner sp;
     ArrayAdapter<TipoPosicao> adapter;
+    private long idEquipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +69,7 @@ public class AdmTimeUI extends AppCompatActivity implements Atualizavel, OnMapRe
         setContentView(R.layout.activity_adm_time_ui);
 
         Intent intent = getIntent();
-        long idEquipe = intent.getLongExtra("id", -1);
+        idEquipe = intent.getLongExtra("idEquipe", -1);
 
         tabHost = (TabHost) findViewById(R.id.adm_time_ui_tabhost);
         tabHost.setup();
@@ -87,8 +90,8 @@ public class AdmTimeUI extends AppCompatActivity implements Atualizavel, OnMapRe
         tabHost.addTab(tsAgenda);
         tabHost.addTab(tsPendentes);
 
-        nomeEquipe = (EditText) findViewById(R.id.nome_equipe);
-        dataFundacao = (EditText) findViewById(R.id.fundacao_equipe);
+        nomeEquipe = (TextView) findViewById(R.id.nome_equipe);
+        nomeEquipe.setText(strNomeEquipe);
 
         listViewJogador = (ListView) findViewById(R.id.listaJogadores);
 
@@ -98,6 +101,8 @@ public class AdmTimeUI extends AppCompatActivity implements Atualizavel, OnMapRe
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(v.getContext(), MapaConviteUI.class);
+                it.putExtra("idEquipe", idEquipe);
+                it.putExtra("nomeEquipe", equipe.getNome());
                 startActivity(it);
             }
         });
@@ -128,7 +133,6 @@ public class AdmTimeUI extends AppCompatActivity implements Atualizavel, OnMapRe
                         equipe = Equipe.toEquipe(retorno.getJSONObject("objeto"));
                         if (equipe != null) {
                             nomeEquipe.setText(equipe.getNome());
-                            dataFundacao.setText(equipe.getDataFundacao().toString());
                             adapterListView = new ListAdapterJogador(AdmTimeUI.this, equipe.getListUsuarioEquipe());
                             listViewJogador.setAdapter(adapterListView);
                             //Cor quando a lista é selecionada para ralagem.
@@ -150,7 +154,7 @@ public class AdmTimeUI extends AppCompatActivity implements Atualizavel, OnMapRe
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        if(jogadores != null){
+        if (jogadores != null) {
             LatLng sydney = new LatLng(-25.358840, -49.214756);
 //        mMap.addMarker(new MarkerOptions().position(sydney).title("(41)99221257"));
 //        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 17));

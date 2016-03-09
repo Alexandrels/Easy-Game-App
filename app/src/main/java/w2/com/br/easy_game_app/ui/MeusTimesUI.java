@@ -43,7 +43,8 @@ public class MeusTimesUI extends AppCompatActivity implements Atualizavel {
                 Equipe equipe = (Equipe) parent.getAdapter().getItem(position);
                 Long equipeId = equipe.getId();
                 Intent it = new Intent(view.getContext(), AdmTimeUI.class);
-                it.putExtra("id", equipeId);
+                it.putExtra("idEquipe", equipeId);
+                it.putExtra("nomeEquipe", equipe.getNome());
                 startActivity(it);
             }
         });

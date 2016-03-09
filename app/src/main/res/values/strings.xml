@@ -4,7 +4,7 @@
     <string name="title_activity_menu_inicial">Dashboard</string>
     <string name="title_activity_cad_usuario">Cadastro de Usuário</string>
     <string name="nome">Nome</string>
-    <string name="posicao_usuario">Posição</string>
+    <string name="posicao_usuario">Convidar para Posição:</string>
     <string name="login">Login</string>
     <string name="senha">Senha</string>
     <string name="apelido">Apelido</string>

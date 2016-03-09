@@ -17,6 +17,13 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/lbIdJogador"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nome"
+            android:visibility="invisible" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/nome" />
@@ -41,6 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/posicao_usuario" />
+
         <Spinner
             android:id="@+id/sp_posicao_invite"
             android:layout_width="wrap_content"

@@ -20,10 +20,10 @@ import w2.com.br.easy_game_app.enuns.Method;
  */
 public class GenericAsyncTask extends AsyncTask<String, ProgressDialog, JSONObject> {
 
-    private static final String DESENVOLVIMENTO = "http://192.168.1.3";
+    private static final String DESENVOLVIMENTO = "http://192.168.1.5";
     private static final String ONDELINE = "http://54.200.135.165";
 
-    private static final String URL_WS = String.format("%s:8080/easy-game/servicos", ONDELINE);
+    private static final String URL_WS = String.format("%s:8080/easy-game/servicos", DESENVOLVIMENTO);
     private Atualizavel atualizavel;
     private Context context;
     private String servico;

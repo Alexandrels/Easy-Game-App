@@ -2,6 +2,7 @@ package w2.com.br.easy_game_app.ui;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -43,8 +44,11 @@ public class MapaConviteUI extends FragmentActivity implements OnMapReadyCallbac
 
     private GoogleMap mMap;
     private final String servicoMapa = "usuario/coordenadas/1";
+    private final String servicoConvite = "equipe/convite";
     private List<Usuario> jogadores;
     ArrayAdapter<TipoPosicao> adapter;
+    private Long idEquipe;
+    private String strNomeEquipe;
 
     AlertDialog.Builder builder;
 
@@ -55,6 +59,10 @@ public class MapaConviteUI extends FragmentActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa_convite_ui);
+
+        Intent intent = getIntent();
+        idEquipe = intent.getLongExtra("idEquipe", -1);
+        strNomeEquipe = intent.getStringExtra("nomeEquipe");
 
         setUpMapIfNeeded();
 
@@ -99,14 +107,17 @@ public class MapaConviteUI extends FragmentActivity implements OnMapReadyCallbac
                 sp = (Spinner) dialoglayout.findViewById(R.id.sp_posicao_invite);
                 sp.setAdapter(adapter);
 
+                TextView ttId = (TextView) dialoglayout.findViewById(R.id.lbIdJogador);
                 TextView ttNome = (TextView) dialoglayout.findViewById(R.id.lbNomeUsuario);
                 TextView ttApelido = (TextView) dialoglayout.findViewById(R.id.lbApelido);
                 String apelido = marker.getTitle();
                 String[] split = apelido.split("-");
-                String nome = split[0];
-                String ape = split[1];
-                ttNome.setText(nome.toString());
-                ttApelido.setText(ape.toString());
+                String idJogador = split[0];
+                String nomeJogador = split[1];
+                String apelidoJogador = split[2];
+                ttNome.setText(nomeJogador.toString());
+                ttApelido.setText(apelidoJogador.toString());
+                ttId.setText(idJogador.toString());
 
                 builder = new AlertDialog.Builder(MapaConviteUI.this);
                 builder.setView(dialoglayout);
@@ -114,18 +125,27 @@ public class MapaConviteUI extends FragmentActivity implements OnMapReadyCallbac
                 builder.setPositiveButton("Convidar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        TextView ttNome = (TextView) dialoglayout.findViewById(R.id.nome_usuario);
-                        EditText ttApelido = (EditText) dialoglayout.findViewById(R.id.apelido_usuario);
+                        TextView ttId = (TextView) dialoglayout.findViewById(R.id.lbIdJogador);
+                        TextView ttNome = (TextView) dialoglayout.findViewById(R.id.lbNomeUsuario);
+                        TextView ttApelido = (TextView) dialoglayout.findViewById(R.id.lbApelido);
                         TipoPosicao tipoPosicao = (TipoPosicao) sp.getSelectedItem();
-                        Usuario usuario = new Usuario();
-                        usuario.setTipoPosicao(tipoPosicao);
-                        if (ttApelido != null) {
-                            String apelido = ttApelido.getText().toString();
-                            usuario.setApelido(apelido);
+                        JSONObject builder = new JSONObject();
+                        try {
+                            if (idEquipe != null && ttId != null && tipoPosicao != null && tipoPosicao != null) {
+                                builder.put("equipe", idEquipe);
+                                builder.put("usuario", Integer.valueOf(ttId.getText().toString()));
+                                builder.put("posicao", tipoPosicao.ordinal());
+
+                                new GenericAsyncTask(MapaConviteUI.this, MapaConviteUI.this, Method.POST, String.format("%s", servicoConvite), builder.toString()).execute();
+                                Toast.makeText(getApplicationContext(), "Convite enviado com sucesso! ", Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Equipe/Usario/Posição esta(ao) nulos! ", Toast.LENGTH_SHORT).show();
+                            }
+
+                        } catch (JSONException e) {
                         }
-                        if (usuario.getTipoPosicao() != null) {
-                            Toast.makeText(getApplicationContext(), "Você é fodão! ", Toast.LENGTH_SHORT).show();
-                        }
+                        ;
                     }
                 });
                 builder.show();
@@ -155,7 +175,7 @@ public class MapaConviteUI extends FragmentActivity implements OnMapReadyCallbac
                             }
                             markerOptions.anchor(0.0f, 1.0f) // Anchors the marker on the bottom left
                                     .position(new LatLng(jogadores.get(i).getLatitude(), jogadores.get(i).getLongitude()))
-                                    .title(String.format("%s-%d", jogadores.get(i).getApelido(), jogadores.get(i).getId()))
+                                    .title(String.format("%d-%s-%s", jogadores.get(i).getId(), jogadores.get(i).getNome(), jogadores.get(i).getApelido()))
                                     .snippet(jogadores.get(i).getTipoPosicao().getDescricao());
                             mMap.addMarker(markerOptions);
                             adicionaModalIconeParaConvite();

@@ -38,22 +38,12 @@
                         android:layout_height="wrap_content"
                         android:text="@string/nome" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/nome_equipe"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/dataFundacao" />
-
-                    <EditText
-                        android:id="@+id/fundacao_equipe"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="date" />
                     <Button
                         android:id="@+id/mapa_mostra_usuarios"
                         style="?android:attr/buttonStyleSmall"
