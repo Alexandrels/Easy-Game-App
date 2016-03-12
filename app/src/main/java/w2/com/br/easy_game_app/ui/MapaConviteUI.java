@@ -134,10 +134,9 @@ public class MapaConviteUI extends FragmentActivity implements OnMapReadyCallbac
                             if (idEquipe != null && ttId != null && tipoPosicao != null && tipoPosicao != null) {
                                 builder.put("equipe", idEquipe);
                                 builder.put("usuario", Integer.valueOf(ttId.getText().toString()));
-                                builder.put("posicao", tipoPosicao.ordinal());
+                                builder.put("posicaoConvite", tipoPosicao.ordinal());
 
                                 new GenericAsyncTask(MapaConviteUI.this, MapaConviteUI.this, Method.POST, String.format("%s", servicoConvite), builder.toString()).execute();
-                                Toast.makeText(getApplicationContext(), "Convite enviado com sucesso! ", Toast.LENGTH_SHORT).show();
 
                             } else {
                                 Toast.makeText(getApplicationContext(), "Equipe/Usario/Posição esta(ao) nulos! ", Toast.LENGTH_SHORT).show();
@@ -182,8 +181,14 @@ public class MapaConviteUI extends FragmentActivity implements OnMapReadyCallbac
                         }
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-25.346312, -49.198559), 14.0f));
 
-                    } else if (objeto.has("convite")) {
+                    }
 
+                }else if (retorno.has("convite")) {
+                    String convite = retorno.getString("convite");
+                    if("sucesso".equals(convite)){
+                        Toast.makeText(getApplicationContext(), "Convite enviado com sucesso! ", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Erro ao enviar convite. ", Toast.LENGTH_SHORT).show();
                     }
 
                 }

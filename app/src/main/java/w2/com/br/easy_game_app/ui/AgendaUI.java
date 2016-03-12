@@ -72,8 +72,8 @@ public class AgendaUI extends AppCompatActivity implements Atualizavel{
                 for (int i = 0; i < array.length(); i++) {
                     eventos.add(gson.fromJson(array.getJSONObject(i).toString(), Evento.class));
                 }
-                ListAdapter adapter = new ListAdapterEvento(this,R.layout.agenda_ui,eventos);
-                lvEventos.setAdapter(adapter);
+//                ListAdapter adapter = new ListAdapterEvento(this,R.layout.agenda_ui,eventos);
+//                lvEventos.setAdapter(adapter);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

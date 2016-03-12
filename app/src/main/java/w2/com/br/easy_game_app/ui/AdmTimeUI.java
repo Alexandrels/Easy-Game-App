@@ -35,11 +35,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import w2.com.br.easy_game_app.ListAdapter.AdapterListViewMeusTimes;
+import w2.com.br.easy_game_app.ListAdapter.ListAdapterEvento;
 import w2.com.br.easy_game_app.ListAdapter.ListAdapterJogador;
 import w2.com.br.easy_game_app.R;
 import w2.com.br.easy_game_app.async.GenericAsyncTask;
 import w2.com.br.easy_game_app.entity.Atualizavel;
 import w2.com.br.easy_game_app.entity.Equipe;
+import w2.com.br.easy_game_app.entity.Evento;
 import w2.com.br.easy_game_app.entity.Usuario;
 import w2.com.br.easy_game_app.enuns.Method;
 import w2.com.br.easy_game_app.enuns.TipoPosicao;
@@ -47,6 +49,7 @@ import w2.com.br.easy_game_app.enuns.TipoPosicao;
 public class AdmTimeUI extends AppCompatActivity implements Atualizavel, OnMapReadyCallback {
     private final String servico = "equipe";
     private final String servicoMapa = "coordenadas/1";
+    private final String servicoAgenda = "agenda";
     private TabHost tabHost;
     private Equipe equipe;
     private TextView nomeEquipe, dataFundacao;
@@ -62,6 +65,11 @@ public class AdmTimeUI extends AppCompatActivity implements Atualizavel, OnMapRe
     private Spinner sp;
     ArrayAdapter<TipoPosicao> adapter;
     private long idEquipe;
+
+    //agenda
+    private List<Evento> eventos;
+    private ListView listViewEvento;
+    private ListAdapterEvento adapterEvento;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +102,7 @@ public class AdmTimeUI extends AppCompatActivity implements Atualizavel, OnMapRe
         nomeEquipe.setText(strNomeEquipe);
 
         listViewJogador = (ListView) findViewById(R.id.listaJogadores);
+        listViewEvento = (ListView) findViewById(R.id.listaEventos);
 
         btnMostraMapaUsuarios = (Button) findViewById(R.id.mapa_mostra_usuarios);
 
@@ -113,21 +122,35 @@ public class AdmTimeUI extends AppCompatActivity implements Atualizavel, OnMapRe
         adapter.setDropDownViewResource(android.support.design.R.layout.support_simple_spinner_dropdown_item);
 
         new GenericAsyncTask(AdmTimeUI.this, this, Method.GET, String.format("%s/%d", servico, idEquipe)).execute();
+        new GenericAsyncTask(AdmTimeUI.this, this, Method.GET, String.format("%s/%d", servicoAgenda, idEquipe)).execute();
     }
 
     @Override
     public void atualizar(JSONObject jsonObject) throws JSONException {
         jogadores = new ArrayList<>();
+        eventos = new ArrayList<Evento>();
         equipe = new Equipe();
         JSONObject retorno = null;
         if (jsonObject.has("objeto")) {
             retorno = new JSONObject(jsonObject.getString("objeto"));
             try {
                 if (retorno.has("objeto")) {
-                    if ("coordenadas".equals(retorno.getString("objeto"))) {
-                        JSONArray array = retorno.getJSONArray("coordenadas");
-                        for (int i = 0; i < array.length(); i++) {
-                            jogadores.add(Usuario.toUsuario(array.getJSONObject(i)));
+                    JSONObject tabsRetorno = new JSONObject(retorno.getString("objeto"));
+                    if (tabsRetorno.has("eventos")) {
+                        JSONArray eventosJSON = tabsRetorno.getJSONArray("eventos");
+                        for (int i = 0; i < eventosJSON.length(); i++) {
+                            eventos.add(Evento.toEvento(eventosJSON.getJSONObject(i)));
+                        }
+                        adapterEvento = new ListAdapterEvento(AdmTimeUI.this, eventos);
+                        listViewEvento.setAdapter(adapterEvento);
+
+
+                    } else if (tabsRetorno.has("coordenadas")) {
+                        if ("coordenadas".equals(retorno.getString("objeto"))) {
+                            JSONArray array = retorno.getJSONArray("coordenadas");
+                            for (int i = 0; i < array.length(); i++) {
+                                jogadores.add(Usuario.toUsuario(array.getJSONObject(i)));
+                            }
                         }
                     } else {
                         equipe = Equipe.toEquipe(retorno.getJSONObject("objeto"));
@@ -138,7 +161,6 @@ public class AdmTimeUI extends AppCompatActivity implements Atualizavel, OnMapRe
                             //Cor quando a lista é selecionada para ralagem.
                             listViewJogador.setCacheColorHint(Color.TRANSPARENT);
                         }
-
                     }
                 }
             } catch (JSONException e) {

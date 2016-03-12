@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import w2.com.br.easy_game_app.ListAdapter.AdapterListViewMeusTimes;
+import w2.com.br.easy_game_app.ListAdapter.ListAdapterEvento;
 import w2.com.br.easy_game_app.R;
 import w2.com.br.easy_game_app.async.GenericAsyncTask;
 import w2.com.br.easy_game_app.entity.Atualizavel;
@@ -30,6 +31,7 @@ public class MeusTimesUI extends AppCompatActivity implements Atualizavel {
     private String servico = "equipe";
     private List<Equipe> equipes;
     private AdapterListViewMeusTimes adapterListView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -175,7 +175,7 @@ public class Equipe implements Serializable {
             }
             return equipe;
         } catch (JSONException e) {
-            throw new RuntimeException("Erro ao ler JSON de Usuario", e);
+            throw new RuntimeException("Erro ao ler JSON de Equipe", e);
         } catch (ParseException e) {
             e.printStackTrace();
         }

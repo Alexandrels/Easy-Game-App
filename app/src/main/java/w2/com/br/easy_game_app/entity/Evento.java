@@ -12,6 +12,7 @@ import java.util.List;
 
 import w2.com.br.easy_game_app.enuns.StatusEvento;
 import w2.com.br.easy_game_app.enuns.TipoEvento;
+import w2.com.br.easy_game_app.util.DataUtils;
 
 public class Evento implements Serializable {
 
@@ -186,13 +187,14 @@ public class Evento implements Serializable {
         return true;
     }
 
+
     public JSONObject toJSON() throws JSONException {
         JSONObject builder = new JSONObject();
         if (getId() != null) {
             builder.put("id", getId());
         }
         builder.put("descricao", getDescricao())
-                .put("dataHora", getDataHora())
+                .put("dataHora", DataUtils.formatarDate(getDataHora(),"dd/MM/yyyy HH:mm:ss"))
                 .put("tipo", getTipoEvento().ordinal()).put("usuario", getUsuario().getId())
                 .put("statusEvento", getStatusEvento().ordinal());
         if (getLocal() != null) {
@@ -227,11 +229,11 @@ public class Evento implements Serializable {
         evento.setDescricao(jsonObject.getString("descricao"));
         String dataHora = jsonObject.getString("dataHora");
         //criar o parde para date
-        evento.setDataHora(new Date());
+        evento.setDataHora(DataUtils.parseDate(dataHora,"dd/MM/yyyy HH:mm:ss"));
         evento.setUsuario(new Usuario(Long.valueOf(jsonObject.getInt("usuario"))));
         evento.setTipoEvento(TipoEvento.values()[jsonObject.getInt("tipo")]);
         evento.setLocal(new Local().toLocal(jsonObject.getJSONObject("local")));
-        evento.setStatusEvento(StatusEvento.values()[jsonObject.getInt("local")]);
+        evento.setStatusEvento(StatusEvento.values()[jsonObject.getInt("statusEvento")]);
         JSONArray arrayEquipes = jsonObject.getJSONArray("equipes");
         for (int i = 0; i < arrayEquipes.length(); i++) {
             Equipe equipe = new Equipe(Long.valueOf(arrayEquipes.getInt((i))));

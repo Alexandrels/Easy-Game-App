@@ -119,7 +119,8 @@ public class UsuarioEquipe implements Serializable {
 		if (jsonObject.has("equipe")) {
 			usuarioEquipe.setEquipe(new Equipe(Long.valueOf(jsonObject.getInt("equipe"))));
 		}
-		String dataContratacao = jsonObject.getString("dataContratacao");
+        //data da contratação somente quando o cara aceitar o convite
+//		String dataContratacao = jsonObject.getString("dataContratacao");
 		usuarioEquipe.setPosicao(TipoPosicao.values()[jsonObject.getInt("posicao")]);
         //falta tratar o parse de string para date
 		usuarioEquipe.setDataContratacao(new Date());
