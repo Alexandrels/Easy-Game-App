@@ -16,12 +16,16 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import w2.com.br.easy_game_app.enuns.TipoPosicao;
+import w2.com.br.easy_game_app.task.SincronismoService;
 import w2.com.br.easy_game_app.ui.AgendaUI;
 import w2.com.br.easy_game_app.ui.CadEquipeActivity;
 import w2.com.br.easy_game_app.ui.CadUsuarioActivity;
+import w2.com.br.easy_game_app.ui.CreateNotificationActivity;
+import w2.com.br.easy_game_app.ui.LoginUI;
 import w2.com.br.easy_game_app.ui.MapaUsuariosActivity;
 import w2.com.br.easy_game_app.ui.MeusTimesUI;
 import w2.com.br.easy_game_app.ui.MostraUsuariosActivity;
+import w2.com.br.easy_game_app.ui.NotificacoesUI;
 
 public class MenuInicialActivity extends AppCompatActivity {
 
@@ -37,45 +41,6 @@ public class MenuInicialActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_inicial);
 
-        btnCadUsuario = (Button) findViewById(R.id.cad_usuario);
-
-        btnCadUsuario.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(v.getContext(), CadUsuarioActivity.class);
-                startActivity(it);
-            }
-        });
-
-        btnCadEquipe = (Button) findViewById(R.id.cad_equipe);
-
-        btnCadEquipe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(v.getContext(), CadEquipeActivity.class);
-                startActivity(it);
-            }
-        });
-
-        btnMostraMapaUsuarios = (Button) findViewById(R.id.mapa_mostra_usuarios);
-
-        btnMostraMapaUsuarios.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(v.getContext(), MapaUsuariosActivity.class);
-                startActivity(it);
-            }
-        });
-
-
-         btnAgenda = (Button) findViewById(R.id.agenda);
-        btnAgenda.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(v.getContext(), AgendaUI.class);
-                startActivity(it);
-            }
-        });
         btnMeusTimes = (Button) findViewById(R.id.meusTimes);
         btnMeusTimes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +51,7 @@ public class MenuInicialActivity extends AppCompatActivity {
         });
 
 
+        startService(new Intent(MenuInicialActivity.this, SincronismoService.class));
     }
 
 }

@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/adm_time_ui_tabhost"
     android:layout_width="fill_parent"
+    android:background="@drawable/fundo_tela_diversos"
     android:layout_height="fill_parent">
 
     <LinearLayout

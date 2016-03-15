@@ -11,20 +11,20 @@ import android.widget.TextView;
 import java.util.List;
 
 import w2.com.br.easy_game_app.R;
-import w2.com.br.easy_game_app.entity.Equipe;
-import w2.com.br.easy_game_app.entity.Usuario;
+import w2.com.br.easy_game_app.entity.Evento;
 import w2.com.br.easy_game_app.entity.UsuarioEquipe;
+import w2.com.br.easy_game_app.util.DataUtils;
 
 /**
- * Created by alexandre on 02/03/16.
+ * Created by alexandre on 05/09/15.
  */
-public class ListAdapterJogador extends BaseAdapter {
+public class ListAdapterConvitePendente extends BaseAdapter {
 
 
     private LayoutInflater mInflater;
     private List<UsuarioEquipe> itens;
 
-    public ListAdapterJogador(Context context, List<UsuarioEquipe> itens) {
+    public ListAdapterConvitePendente(Context context, List<UsuarioEquipe> itens) {
         //Itens que preencheram o listview
         this.itens = itens;
         //responsavel por pegar o Layout do item.
@@ -64,18 +64,13 @@ public class ListAdapterJogador extends BaseAdapter {
         //Pega o item de acordo com a posção.
         UsuarioEquipe item = itens.get(position);
         //infla o layout para podermos preencher os dados
-        view = mInflater.inflate(R.layout.item_listview_jogador, null);
+        view = mInflater.inflate(R.layout.item_listview_convite_pendente, null);
 
         //atravez do layout pego pelo LayoutInflater, pegamos cada id relacionado
         //ao item e definimos as informações.
-        ((TextView) view.findViewById(R.id.nome_jogador)).setText(item.getUsuario().getNome());
-        ((TextView) view.findViewById(R.id.posicao_jogador)).setText(item.getRetornaPosicao());
-        if(item.getPosicao().ordinal() == 1){
-            ((ImageView) view.findViewById(R.id.imagemview)).setImageResource(R.drawable.ic_jogador_gol);
-
-        }else{
-            ((ImageView) view.findViewById(R.id.imagemview)).setImageResource(R.drawable.ic_jogador_linha);
-        }
+        ((TextView) view.findViewById(R.id.nome_time_convite)).setText(item.getEquipe().getNome());
+        ((TextView) view.findViewById(R.id.posicao_convite)).setText(item.getRetornaPosicao());
+        ((ImageView) view.findViewById(R.id.imagemview)).setImageResource(R.drawable.ic_convite);
 
         return view;
     }

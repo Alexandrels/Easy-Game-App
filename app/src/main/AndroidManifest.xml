@@ -49,11 +49,25 @@
         <activity android:name=".ui.MapaUsuariosActivity" />
         <activity android:name=".ui.ConviteActivity" />
         <activity android:name=".ui.InviteActivity" />
-        <activity android:name=".MenuInicialActivity" />
+        <activity
+            android:name=".MenuInicialActivity"
+            android:label="@string/title_activity_dashboard" />
         <activity android:name=".ui.AgendaUI" />
-        <activity android:name=".ui.MeusTimesUI" />
-        <activity android:name=".ui.AdmTimeUI" />
-        <activity android:name=".ui.MapaConviteUI"></activity>
+        <activity
+            android:name=".ui.MeusTimesUI"
+            android:label="@string/title_activity_dashboard" />
+        <activity
+            android:name=".ui.AdmTimeUI"
+            android:label="@string/title_activity_admTimeUI" />
+        <activity android:name=".ui.MapaConviteUI" />
+        <activity
+            android:name=".ui.NotificacoesUI"
+            android:label="@string/title_activity_notificacoes" />
+
+        <service android:name=".task.SincronismoService" />
+
+        <activity android:name=".ui.CreateNotificationActivity" />
+        <activity android:name=".ui.NotificationReceiverActivity"></activity>
     </application>
 
 </manifest>

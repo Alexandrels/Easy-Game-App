@@ -6,55 +6,57 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/fundo_tela_inicial"
     tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:text="EASY-GAME"
-        android:textColor="#ff7aff24"
-        android:textSize="35dp" />
+        android:textColor="#040404"
+        android:textSize="35dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:id="@+id/edLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="46dp"
         android:focusable="true"
         android:hint="Login"
         android:textColorHighlight="#ff7eff15"
-        android:textColorHint="#ffff25e6" />
+        android:textColorHint="#040404"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="34dp"
+        android:layout_alignRight="@+id/editSenha"
+        android:layout_alignEnd="@+id/editSenha" />
 
 
     <EditText
         android:id="@+id/editSenha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/edLogin"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/edLogin"
-        android:layout_below="@+id/edLogin"
         android:ems="10"
         android:hint="Senha"
         android:inputType="textPassword"
-        android:textColorHint="#ffff299f" />
+        android:textColorHint="#030303"
+        android:layout_below="@+id/edLogin"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/cadastra_se"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/editSenha"
         android:text="Cadastrar-se"
-        android:textSize="15dp" />
+        android:textSize="15dp"
+        android:layout_below="@+id/editSenha"
+        android:layout_alignLeft="@+id/editSenha"
+        android:layout_alignStart="@+id/editSenha" />
 
 
     <Button
@@ -62,9 +64,10 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Entrar"
-        android:layout_centerVertical="true"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="88dp" />
 
 
 </RelativeLayout>

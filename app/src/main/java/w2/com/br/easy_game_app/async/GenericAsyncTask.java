@@ -1,5 +1,6 @@
 package w2.com.br.easy_game_app.async;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -47,7 +48,10 @@ public class GenericAsyncTask extends AsyncTask<String, ProgressDialog, JSONObje
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = ProgressDialog.show(context, "Aguarde", "carregando...");
+        if(context instanceof Activity){
+            progressDialog = ProgressDialog.show(context, "Aguarde", "carregando...");
+
+        }
     }
 
     @Override
@@ -109,7 +113,7 @@ public class GenericAsyncTask extends AsyncTask<String, ProgressDialog, JSONObje
         super.onPostExecute(jsonObject);
         try {
             atualizavel.atualizar(jsonObject);
-            if (progressDialog.isShowing()) {
+            if (progressDialog != null && progressDialog.isShowing()) {
                 progressDialog.dismiss();
             }
         } catch (JSONException e) {

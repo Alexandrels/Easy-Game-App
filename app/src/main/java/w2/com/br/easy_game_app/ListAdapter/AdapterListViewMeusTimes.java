@@ -73,7 +73,7 @@ public class AdapterListViewMeusTimes extends BaseAdapter {
         //atravez do layout pego pelo LayoutInflater, pegamos cada id relacionado
         //ao item e definimos as informações.
         ((TextView) view.findViewById(R.id.text)).setText(item.getNome());
-        ((ImageView) view.findViewById(R.id.imagemview)).setImageResource(R.mipmap.download);
+        ((ImageView) view.findViewById(R.id.imagemview)).setImageResource(R.drawable.escudo_easy_game);
 
         return view;
     }

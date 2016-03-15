@@ -7,6 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/fundo_tela_diversos"
     tools:context="w2.com.br.easy_game_app.MenuInicialActivity">
 
     <ScrollView
@@ -18,32 +19,7 @@
             android:layout_height="fill_parent"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/cad_usuario"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Cad Usuario" />
 
-            <Button
-                android:id="@+id/cad_equipe"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Cad Equipe" />
-
-            <Button
-                android:id="@+id/mapa_mostra_usuarios"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Mapa" />
-
-            <Button
-                android:id="@+id/agenda"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Dialog" />
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

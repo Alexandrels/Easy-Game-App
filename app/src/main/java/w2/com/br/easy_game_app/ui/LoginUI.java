@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -19,6 +20,7 @@ import w2.com.br.easy_game_app.R;
 import w2.com.br.easy_game_app.async.GenericAsyncTask;
 import w2.com.br.easy_game_app.entity.Atualizavel;
 import w2.com.br.easy_game_app.enuns.Method;
+import w2.com.br.easy_game_app.task.SincronismoService;
 
 public class LoginUI extends AppCompatActivity implements Atualizavel {
 
@@ -36,11 +38,20 @@ public class LoginUI extends AppCompatActivity implements Atualizavel {
         btLogar = (Button) findViewById(R.id.btnLogar);
         ed1 = (EditText) findViewById(R.id.edLogin);
         ed2 = (EditText) findViewById(R.id.editSenha);
+        TextView cadastrar = (TextView) findViewById(R.id.cadastra_se);
+
+        cadastrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent cad = new Intent(LoginUI.this, CadUsuarioActivity.class);
+                startActivity(cad);
+            }
+        });
 
         btLogar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ed1 != null && ed2 != null){
+                if (ed1 != null && ed2 != null) {
                     try {
                         JSONObject credenciais = new JSONObject();
 
@@ -65,6 +76,7 @@ public class LoginUI extends AppCompatActivity implements Atualizavel {
 //                }
             }
         });
+        startService(new Intent(LoginUI.this, SincronismoService.class));
 
     }
 
@@ -72,8 +84,8 @@ public class LoginUI extends AppCompatActivity implements Atualizavel {
     public void atualizar(JSONObject jsonObject) throws JSONException {
         if (jsonObject.has("objeto")) {
             String retorno = jsonObject.getString("objeto");
-            Log.i("RETORNO_LOGIN",retorno.toString());
-            if("ok".equals(retorno)){
+            Log.i("RETORNO_LOGIN", retorno.toString());
+            if ("ok".equals(retorno)) {
                 acessaDashboard();
             }
         } else if (jsonObject.has("erro")) {
@@ -84,7 +96,7 @@ public class LoginUI extends AppCompatActivity implements Atualizavel {
 
     }
 
-    public void acessaDashboard(){
+    public void acessaDashboard() {
         Intent menu = new Intent(LoginUI.this, MenuInicialActivity.class);
         startActivity(menu);
     }
